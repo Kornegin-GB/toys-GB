@@ -3,27 +3,47 @@ import java.util.List;
 import java.util.Scanner;
 
 public class UserInterface {
+    /**
+     * Список призов
+     */
     protected static List<Toys> toysList = new ArrayList<>();
+    protected static boolean isTrue = true;
 
-    protected static List mainMenu() {
-        List menu = new ArrayList<>();
-        menu.add(0, "Добавить игрушку");
-        menu.add(1, "Изменить % выпадения игрушки");
-        menu.add(2, "Разыграть игрушку");
-        menu.add(3, "Выдать игрушку");
+    /**
+     * Список главного меню
+     */
+    protected static List<String> mainMenu() {
+        List<String> menu = new ArrayList<>();
+        menu.add(0, "Добавить приз");
+        menu.add(1, "Изменить % выпадения приза");
+        menu.add(2, "Разыграть приз");
+        menu.add(3, "Выдать приз");
         menu.add(4, "Выход из программы");
-
         return menu;
     }
 
+    /**
+     * Отображение главного меню
+     */
+    protected static void showMaimMenu() {
+        System.out.println("\nГлавное меню");
+        for (int i = 0; i < mainMenu().size(); i++) {
+            System.out.printf("%d. %s\n", i + 1, mainMenu().get(i));
+        }
+        System.out.println();
+    }
+
+    /**
+     * Метод добавляет список призов
+     */
     protected static void addToys() {
-        boolean isTrue = true;
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Введите название игрушки: ");
+        System.out.print("Введите название приза: ");
         String nameToys = scanner.nextLine();
         int countToys = 0;
+        int frequencyDrops = 0;
         while (isTrue) {
-            System.out.print("Введите количество игрушек: ");
+            System.out.print("Введите количество призов: ");
             if (scanner.hasNextInt()) {
                 isTrue = false;
                 countToys = scanner.nextInt();
@@ -33,9 +53,8 @@ public class UserInterface {
             }
         }
         isTrue = true;
-        int frequencyDrops = 0;
         while (isTrue) {
-            System.out.print("Введите % выпадения игрушки от 100 до 200: ");
+            System.out.print("Введите % выпадения приза от 100 до 200: ");
             if (scanner.hasNextInt()) {
                 frequencyDrops = scanner.nextInt();
                 if (frequencyDrops >= 100 && frequencyDrops <= 200) {
@@ -54,21 +73,15 @@ public class UserInterface {
         System.out.printf("\nВы добавили:\n%s\n", toysList.get(toysList.size() - 1));
     }
 
-    protected static void showMaimMenu() {
-        System.out.println("\nГлавное меню");
-        for (int i = 0; i < UserInterface.mainMenu().size(); i++) {
-            System.out.printf("%d. %s\n", i + 1, UserInterface.mainMenu().get(i));
-        }
-        System.out.println();
-    }
-
+    /**
+     * Метод изменяет % выпадения приза
+     */
     protected static void changeToys() {
-        boolean isTrue = true;
         if (toysList.isEmpty()) {
-            System.out.println("\nСписок игрушек пуст");
+            System.out.println("\nСписок призов пуст");
         } else {
-            for (int i = 0; i < toysList.size(); i++) {
-                System.out.println(toysList.get(i));
+            for (Toys toys : toysList) {
+                System.out.println(toys);
             }
             Scanner scanner = new Scanner(System.in);
             while (isTrue) {
@@ -77,14 +90,13 @@ public class UserInterface {
                     int entryNumber = scanner.nextInt();
                     if (entryNumber >= 1 && entryNumber <= toysList.size()) {
                         System.out.println("\nВыбранная запись для изменения\n" + toysList.get(entryNumber - 1));
-                        //System.out.print("\nВведите новый % выпадения от 100 до 200: ");
                         while (isTrue) {
                             System.out.print("\nВведите новый % выпадения от 100 до 200: ");
                             if (scanner.hasNextInt()) {
                                 int newFrequencyDrops = scanner.nextInt();
                                 if (newFrequencyDrops >= 100 && newFrequencyDrops <= 200) {
                                     toysList.get(entryNumber - 1).frequencyDrops = newFrequencyDrops;
-                                    System.out.println("Новая запись игрушки\n" + toysList.get(entryNumber - 1));
+                                    System.out.println("Новая запись приза\n" + toysList.get(entryNumber - 1));
                                     isTrue = false;
                                 } else {
                                     System.out.println("Введен недопустимый процент");
@@ -103,5 +115,25 @@ public class UserInterface {
                 }
             }
         }
+    }
+
+    /**
+     * Метод ввода победителя выигравшего приз
+     */
+    protected static String inputInWinner(String prize) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.printf("Ваш приз %s\n", prize);
+        System.out.print("Введите имя победителя: ");
+        return scanner.nextLine();
+    }
+
+    /**
+     * Метод формирования списка победителей и выигранных призов
+     */
+    protected static void listOfWinners(List<Toys> listWinner, int index) {
+        WinToys.winToysList.add("Победитель " + inputInWinner(listWinner.get(index).nameToys) +
+                ". Название приза: " + listWinner.get(index).nameToys +
+                " (id " + listWinner.get(index).id + ") в количестве - " +
+                1 + " шт.");
     }
 }

@@ -10,6 +10,9 @@ public class Main {
         System.out.println("\nПрограмма завершила работу");
     }
 
+    /**
+     * Метод взаимодействия с главным меню
+     */
     protected static void runProgram() {
         UserInterface.showMaimMenu();
         Scanner scanner = new Scanner(System.in);
@@ -18,15 +21,16 @@ public class Main {
             int numberMenu = scanner.nextInt();
             if (numberMenu >= 1 && numberMenu <= UserInterface.mainMenu().size()) {
                 if (numberMenu == 1) {
-                    System.out.println("\nДобавить игрушку");
+                    System.out.println("\nДобавить приз");
                     UserInterface.addToys();
                 } else if (numberMenu == 2) {
-                    System.out.println("\nИзменить % выпадения игрушки");
+                    System.out.println("\nИзменить % выпадения приза");
                     UserInterface.changeToys();
                 } else if (numberMenu == 3) {
-                    System.out.println("\nРазыграть игрушку");
+                    System.out.println("\nРазыграть приз");
+                    WinToys.lotteryToys();
                 } else if (numberMenu == 4) {
-                    System.out.println("\nВыдать игрушку");
+                    System.out.println("\nВыдать приз");
                 } else if (numberMenu == 5) {
                     run = false;
                 }
