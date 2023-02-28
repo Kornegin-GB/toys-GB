@@ -31,7 +31,10 @@ public class Main {
                     WinToys.lotteryToys();
                 } else if (numberMenu == 4) {
                     System.out.println("\nВыдать приз");
+                    WinToys.givOutToys();
                 } else if (numberMenu == 5) {
+                    FileOperations.fileDelete();
+                } else if (numberMenu == 6) {
                     run = false;
                 }
             } else {

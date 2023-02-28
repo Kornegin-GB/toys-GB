@@ -18,7 +18,8 @@ public class UserInterface {
         menu.add(1, "Изменить % выпадения приза");
         menu.add(2, "Разыграть приз");
         menu.add(3, "Выдать приз");
-        menu.add(4, "Выход из программы");
+        menu.add(4, "Удалить файл с выданными призами");
+        menu.add(5, "Выход из программы");
         return menu;
     }
 
@@ -37,6 +38,7 @@ public class UserInterface {
      * Метод добавляет список призов
      */
     protected static void addToys() {
+        isTrue = true;
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите название приза: ");
         String nameToys = scanner.nextLine();
@@ -45,8 +47,8 @@ public class UserInterface {
         while (isTrue) {
             System.out.print("Введите количество призов: ");
             if (scanner.hasNextInt()) {
-                isTrue = false;
                 countToys = scanner.nextInt();
+                isTrue = false;
             } else {
                 System.out.println("Вы ввели не число!");
                 scanner = new Scanner(System.in);
@@ -120,9 +122,9 @@ public class UserInterface {
     /**
      * Метод ввода победителя выигравшего приз
      */
-    protected static String inputInWinner(String prize) {
+    protected static String inputInWinner() {
         Scanner scanner = new Scanner(System.in);
-        System.out.printf("Ваш приз %s\n", prize);
+//        System.out.printf("Ваш приз %s\n", prize);
         System.out.print("Введите имя победителя: ");
         return scanner.nextLine();
     }
@@ -131,9 +133,16 @@ public class UserInterface {
      * Метод формирования списка победителей и выигранных призов
      */
     protected static void listOfWinners(List<Toys> listWinner, int index) {
-        WinToys.winToysList.add("Победитель " + inputInWinner(listWinner.get(index).nameToys) +
+        WinToys.winToysList.add("Победитель " + inputInWinner() +
                 ". Название приза: " + listWinner.get(index).nameToys +
                 " (id " + listWinner.get(index).id + ") в количестве - " +
                 1 + " шт.");
+        System.out.printf("Ваш приз %s\n", listWinner.get(index).nameToys);
+    }
+
+    protected static void showWinner() {
+        for (int i = 0; i < WinToys.listOfRaffledToys.size(); i++) {
+            System.out.println((i + 1) + " " + WinToys.listOfRaffledToys.get(i));
+        }
     }
 }
